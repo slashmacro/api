@@ -42,6 +42,6 @@ require('./middleware/passport')
 
 // ROUTER
 app.use('/auth', require('./routes/auth'))
-// app.use('/api', require('./routes/api'))
+app.use('/api', require('./routes/api'))
 
 module.exports = app
