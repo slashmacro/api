@@ -1,5 +1,6 @@
 const router = require('express').Router()
 const passport = require('passport')
+const pt = require('popup-tools')
 
 router.route('/').get(
   passport.authenticate('google', {
@@ -14,7 +15,9 @@ router.route('/redirect').get(
   passport.authenticate('google', {
     failureRedirect: `${process.env.CLIENT_URL}/login`
   }),
-  (req, res) => res.redirect(process.env.CLIENT_URL)
+  (req, res) => {
+    res.end(pt.popupResponse(req.user))
+  }
 )
 
 module.exports = router
