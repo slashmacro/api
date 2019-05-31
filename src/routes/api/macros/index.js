@@ -7,18 +7,16 @@ const User = require('../../../models/User')
 router
   .route('/')
   .get(async (req, res, next) => {
-    const macros = await Macro.find().catch(next)
+    const macros = await Macro.find()
+      .populate('createdBy')
+      .catch(next)
     if (!macros) return res.status(404).send('No macros were found')
     return res.send(macros)
   })
-  .post(async (req, res, next) => {
-    const { macro, title, tags = [] } = req.body
-
+  .post((req, res, next) => {
     new Macro({
       createdBy: req.user.id,
-      macro,
-      title,
-      tags
+      ...req.body
     })
       .save()
       .then(async newMacro => {
