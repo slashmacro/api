@@ -23,6 +23,13 @@ const User = mongoose.Schema({
     }
   ],
 
+  comments: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Comment'
+    }
+  ],
+
   // action info
   createdOn: {
     type: Date,

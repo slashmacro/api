@@ -1,7 +1,7 @@
 const dotenv = require('dotenv')
 
 // setup dotenv config
-dotenv.config({ path: 'variables.env' })
+dotenv.config({ path: '.env' })
 
 const mongoose = require('mongoose')
 

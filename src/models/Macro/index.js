@@ -14,14 +14,21 @@ const Macro = mongoose.Schema({
   },
   updatedOn: {
     type: Date,
-    default: new Date()
+    default: null
   },
   deletedOn: {
     type: Date,
-    default: new Date()
+    default: null
   },
   macro: String,
   title: String,
+  description: String,
+  comments: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Comment'
+    }
+  ],
   tags: {
     type: Array,
     default: []
