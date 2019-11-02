@@ -1,7 +1,11 @@
 const router = require('express').Router()
 
-router.get('/', (req, res) => {
-  res.send('SERVER: Hello World')
+router.post('/login', async (req, res) => {
+  return res.send('login for user')
+})
+
+router.post('/register', async (req, res) => {
+  return res.send('register a new user')
 })
 
 module.exports = router

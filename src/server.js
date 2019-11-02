@@ -1,11 +1,8 @@
-const dotenv = require('dotenv')
-
-// setup dotenv config
-dotenv.config({ path: '.env' })
+require('dotenv').config()
 
 // PORT
 const PORT = process.env.PORT || 8000
-const app = require('./index')
+const app = require('./app')
 
 app.set('port', PORT)
 

@@ -1,7 +1,7 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "src/server.js",
   "repository": "https://github.com/slashmacro/database.git",
   "author": "Zach Harris <zachbharris94@gmail.com>",
   "license": "MIT",
