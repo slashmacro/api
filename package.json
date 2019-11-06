@@ -1,15 +1,16 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  "main": "src/server.js",
+  "main": "server.js",
   "repository": "https://github.com/slashmacro/database.git",
   "author": "Zach Harris <zachbharris94@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "start": "nodemon --exec babel-node src/server",
+    "start": "nodemon --exec babel-node server",
     "migrate": "sequelize db:migrate"
   },
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",

@@ -1,8 +1,13 @@
 const express = require('express')
+const session = require('express-session')
 const bodyParser = require('body-parser')
 const cors = require('cors')
+const passport = require('passport')
 
 const app = express()
+
+// SESSION
+app.use(session({ secret: process.env.SESSION_SECRET }))
 
 // BODYPARSER
 app.use(bodyParser.json())
@@ -10,6 +15,10 @@ app.use(bodyParser.urlencoded({ extended: false }))
 
 // CORS
 app.use(cors())
+
+// PASSPORT
+app.use(passport.initialize())
+app.use(passport.session())
 
 // DATABASE
 const { sequelize } = require('./models')

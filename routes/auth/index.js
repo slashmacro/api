@@ -1,18 +1,16 @@
 const router = require('express').Router()
-const models = require('../../models')
+const db = require('../../models')
 
-router.post('/login', async (req, res) => {
-  return res.send('login for user')
-})
+const { User } = db
 
-router.post('/register', async (req, res) => {
-  try {
-    const user = await models.User.sync().create(req.body)
-    return res.send(user)
-  } catch (err) {
-    console.log(err)
-    return res.send(400)
-  }
+router.post('/register', (req, res) => {
+  const { email } = req.body
+  User.find({ where: { email } }).success(user => {
+    if (user) return res.status(400).send()
+    return User.create(req.body).error(err =>
+      console.log('Error creating new user:', err)
+    )
+  })
 })
 
 module.exports = router
