@@ -1,7 +1,7 @@
 language: node_js
 node_js:
-  - "13"
+  - '13'
 
 script:
-  - yarn run lint
-  - yarn test
+  - npm run lint
+  - npm test
