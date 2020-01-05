@@ -1,5 +1,6 @@
 const user = (sequelize, DataTypes) => {
   const User = sequelize.define('User', {
+    name: DataTypes.STRING,
     username: {
       type: DataTypes.STRING,
       unique: true,
@@ -7,6 +8,9 @@ const user = (sequelize, DataTypes) => {
     email: {
       type: DataTypes.STRING,
       unique: true,
+      validate: {
+        isEmail: true,
+      },
     },
     password: DataTypes.STRING,
     admin: DataTypes.BOOLEAN,
