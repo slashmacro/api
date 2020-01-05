@@ -8,7 +8,7 @@
   "scripts": {
     "start": "node -r dotenv/config src/index.js",
     "dev": "nodemon -r dotenv/config src/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest --passWithNoTests",
     "lint": "eslint \"./**/*.js\""
   },
   "dependencies": {
@@ -28,6 +28,7 @@
     "@babel/plugin-proposal-optional-chaining": "^7.6.0",
     "@babel/preset-env": "^7.6.3",
     "@babel/register": "^7.7.7",
+    "babel-jest": "^24.9.0",
     "eslint": "6.1.0",
     "eslint-config-airbnb-base": "14.0.0",
     "eslint-config-prettier": "^6.5.0",

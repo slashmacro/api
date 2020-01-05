@@ -2,7 +2,7 @@ import express from 'express'
 
 const Router = express.Router()
 
-Router.get('/debug-sentry', (req, res) => {
+Router.get('/debug-sentry', () => {
   throw new Error('My first sentry error')
 })
 
