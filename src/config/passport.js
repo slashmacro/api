@@ -6,9 +6,7 @@ import models from '../models'
 
 const initialize = passport => {
   const authenticateUser = async (email, password, done) => {
-    const user = await models.User.findOne({ where: { email: email } })
-
-    console.log('===========++>', user)
+    const user = await models.User.findOne({ where: { email } })
 
     if (!user) return done(null, false)
     if (await !bcrypt.compare(password, user.password)) return done(null, false)
