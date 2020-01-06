@@ -8,15 +8,16 @@ import * as Sentry from '@sentry/node'
 // MODELS
 import { sequelize } from './models'
 
-// CONFIG
-import passportConfig from './config/passport'
-
 // ROUTES
 import { api, auth } from './routes'
+
+// CONFIG
+import passportConfig from './config/passport'
 
 const app = express()
 const port = process.env.PORT || 8000
 
+// load passport config
 passportConfig(passport)
 
 if (process.env.NODE_ENV === 'production') {
@@ -40,6 +41,10 @@ app.use(
     secret: process.env.SESSION_SECRET,
     resave: true,
     saveUninitialized: true,
+    cookie: {
+      // set cookie age to two weeks
+      maxAge: 1000 * 60 * 60 * 24 * 14,
+    },
   })
 )
 
