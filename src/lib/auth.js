@@ -2,16 +2,9 @@ import bcrypt from 'bcrypt'
 
 import models from '../models'
 
-export const authenticateUser = async (email, password) => {
-  email = email.trim().toLowerCase()
-  const user = await models.User.findOne({ where: { email } })
-
-  if (user) {
-    if (await bcrypt.compare(password, user.password)) {
-      return user
-    }
-  }
-  return Error('User authentication failed.')
+export const isAuthenticated = (req, res, next) => {
+  if (req.isAuthenticated()) return next()
+  return res.sendStatus(401)
 }
 
 export const createUser = async opts => {

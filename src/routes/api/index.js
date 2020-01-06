@@ -1,9 +1,11 @@
 import express from 'express'
 
+import macros from './macros'
+
 const Router = express.Router()
 
-Router.get('/debug-sentry', () => {
-  throw new Error('My first sentry error')
-})
+// * ROUTES ARE PREPENDED WITH /api
+
+Router.use('/macros', macros)
 
 export default Router

@@ -3,19 +3,19 @@ import passport from 'passport'
 
 import { createUser } from '../../lib/auth'
 
-const Router = express.Router()
+const router = express.Router()
 
-// * ROUTES ARE PREPENDED WITH /api
+// * ROUTES ARE PREPENDED WITH /auth
 
-Router.post('/register', (req, res) => {
+router.post('/register', (req, res) => {
   return createUser(req.body)
     .then(user => res.send(user))
     .catch(err => res.sendStatus(500).send(err))
 })
 
-Router.post('/login', passport.authenticate('local'))
+router.post('/login', passport.authenticate('local'))
 
-Router.post('/logout', async (req, res) => {
+router.delete('/logout', async (req, res) => {
   try {
     await req.logOut()
     return res.sendStatus(200)
@@ -24,4 +24,4 @@ Router.post('/logout', async (req, res) => {
   }
 })
 
-export default Router
+export default router

@@ -1,4 +1,4 @@
-const user = (sequelize, DataTypes) => {
+export default (sequelize, DataTypes) => {
   const User = sequelize.define('User', {
     username: {
       type: DataTypes.STRING,
@@ -12,7 +12,10 @@ const user = (sequelize, DataTypes) => {
       },
     },
     password: DataTypes.STRING,
-    admin: DataTypes.BOOLEAN,
+    admin: {
+      type: DataTypes.BOOLEAN,
+      default: false,
+    },
   })
 
   User.associate = models => {
@@ -21,5 +24,3 @@ const user = (sequelize, DataTypes) => {
 
   return User
 }
-
-export default user
