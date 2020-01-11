@@ -16,6 +16,9 @@ export default (sequelize, DataTypes) => {
       type: DataTypes.BOOLEAN,
       default: false,
     },
+    displayName: DataTypes.STRING,
+    firstName: DataTypes.STRING,
+    lastName: DataTypes.STRING,
   })
 
   User.associate = models => {
