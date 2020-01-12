@@ -4,6 +4,7 @@ import bodyParser from 'body-parser'
 import session from 'express-session'
 import passport from 'passport'
 import * as Sentry from '@sentry/node'
+import socketio from 'socket.io'
 
 // MODELS
 import { sequelize } from './models'
@@ -59,7 +60,15 @@ app.use(Sentry.Handlers.errorHandler())
 app.use('/api', api)
 app.use('/auth', auth)
 
-app.listen(port, () => console.log(`Now listening on ${port}`))
+const server = app.listen(port, () => console.log(`Now listening on ${port}`))
+
+// SOCKET.io
+const io = socketio(server)
+
+io.on('connection', socket => {
+  console.log('user connected')
+  socket.on('disconnect', () => console.log('user disconnected'))
+})
 
 // sync database
 sequelize
