@@ -1,6 +1,7 @@
 import express from 'express'
 import cors from 'cors'
 import bodyParser from 'body-parser'
+import cookieParser from 'cookie-parser'
 import session from 'express-session'
 import passport from 'passport'
 import * as Sentry from '@sentry/node'
@@ -18,9 +19,6 @@ import passportConfig from './config/passport'
 const app = express()
 const port = process.env.PORT || 8000
 
-// load passport config
-passportConfig(passport)
-
 if (process.env.NODE_ENV === 'production') {
   Sentry.init({ dsn: process.env.SENTRY_DSN })
 }
@@ -31,10 +29,6 @@ app.use(Sentry.Handlers.requestHandler())
 
 // CORS
 app.use(cors())
-
-// BODY PARSER
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: true }))
 
 // SESSION
 app.use(
@@ -49,9 +43,16 @@ app.use(
   })
 )
 
+// BODY PARSER
+app.use(bodyParser.urlencoded({ extended: true }))
+
+// COOKIE PARSER
+app.use(cookieParser())
+
 // PASSPORT
 app.use(passport.initialize())
 app.use(passport.session())
+require('./middleware/passport')
 
 // The error handler must be before any other error middleware and after all controllers
 app.use(Sentry.Handlers.errorHandler())
