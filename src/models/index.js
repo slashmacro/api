@@ -10,8 +10,8 @@ const sequelize = new Sequelize(
 )
 
 const models = {
-  User: sequelize.import('./user'),
-  Macro: sequelize.import('./macro'),
+  User: sequelize.import('./User'),
+  Macro: sequelize.import('./Macro'),
 }
 
 Object.keys(models).forEach(key => {
