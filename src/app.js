@@ -7,14 +7,8 @@ import passport from 'passport'
 import * as Sentry from '@sentry/node'
 import socketio from 'socket.io'
 
-// MODELS
-import { sequelize } from './models'
-
 // ROUTES
 import { api, auth } from './routes'
-
-// CONFIG
-import passportConfig from './config/passport'
 
 const app = express()
 const port = process.env.PORT || 8000
@@ -70,15 +64,5 @@ io.on('connection', socket => {
   console.log('user connected')
   socket.on('disconnect', () => console.log('user disconnected'))
 })
-
-// sync database
-sequelize
-  .sync()
-  .then(() => {
-    console.log('Connected to database successfully')
-  })
-  .catch(err => {
-    console.log(err, 'Something went wrong')
-  })
 
 export default app
