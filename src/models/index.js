@@ -22,7 +22,7 @@ Object.keys(models).forEach(key => {
 
 export { sequelize }
 
-export { default as User } from './user'
-export { default as Macro } from './macro'
+export { default as User } from './User'
+export { default as Macro } from './Macro'
 
 export default models

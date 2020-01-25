@@ -39,6 +39,7 @@ app.use(
 
 // BODY PARSER
 app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.json())
 
 // COOKIE PARSER
 app.use(cookieParser())

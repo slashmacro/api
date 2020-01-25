@@ -15,9 +15,11 @@ router.post('/register', (req, res) => {
     .catch(err => res.sendStatus(500).send(err))
 })
 
-router.post('/login', passport.authenticate('local', { failWithError: true }))
+router.post('/login', passport.authenticate('local'), (req, res) => {
+  return res.send(req.user)
+})
 
-router.get('/logout', async (req, res) => {
+router.delete('/logout', async (req, res) => {
   try {
     await req.logOut()
     return res.sendStatus(200)
