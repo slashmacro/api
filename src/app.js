@@ -7,6 +7,8 @@ import passport from 'passport'
 import * as Sentry from '@sentry/node'
 import socketio from 'socket.io'
 
+import { sequelize } from './models'
+
 // ROUTES
 import { api, auth } from './routes'
 
@@ -24,25 +26,34 @@ app.use(Sentry.Handlers.requestHandler())
 // CORS
 app.use(cors())
 
-// SESSION
-app.use(
-  session({
-    secret: process.env.SESSION_SECRET,
-    resave: true,
-    saveUninitialized: true,
-    cookie: {
-      // set cookie age to two weeks
-      maxAge: 1000 * 60 * 60 * 24 * 14,
-    },
-  })
-)
-
 // BODY PARSER
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 
 // COOKIE PARSER
 app.use(cookieParser())
+
+// Session Store
+const SequelizeStore = require('connect-session-sequelize')(session.Store)
+
+// SESSION
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    store: new SequelizeStore({ db: sequelize }),
+    resave: false,
+    saveUninitialized: false,
+    proxy: true,
+    cookie: {
+      // set cookie age to two weeks
+      maxAge: 1000 * 60 * 60 * 24 * 14,
+      secure: true,
+    },
+  })
+)
+
+// sync
+sequelize.sync()
 
 // PASSPORT
 app.use(passport.initialize())
