@@ -23,3 +23,8 @@ export const createUser = async opts => {
 
   return newUser
 }
+
+export const getUserById = async id => {
+  const user = await models.User.findByPk(id)
+  return user
+}

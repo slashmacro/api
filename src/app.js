@@ -47,7 +47,7 @@ app.use(
     cookie: {
       // set cookie age to two weeks
       maxAge: 1000 * 60 * 60 * 24 * 14,
-      secure: true,
+      secure: false,
     },
   })
 )

@@ -16,7 +16,8 @@ router.post('/register', (req, res) => {
 })
 
 router.post('/login', passport.authenticate('local'), (req, res) => {
-  return res.send(req.user)
+  const { sessionID } = req
+  return res.send(sessionID)
 })
 
 router.delete('/logout', async (req, res) => {
