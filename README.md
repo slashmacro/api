@@ -1,7 +1,5 @@
 ## Getting Started
 
-`git good`
-
 ### Prerequisites
 
 - [PostgreSQL](https://www.postgresql.org/)
