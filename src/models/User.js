@@ -1,26 +1,14 @@
-export default (sequelize, DataTypes) => {
-  const User = sequelize.define('User', {
-    username: {
-      type: DataTypes.STRING,
-      unique: true,
+module.exports = (sequelize, DataTypes) => {
+  const User = sequelize.define(
+    'User',
+    {
+      name: DataTypes.STRING,
+      email: DataTypes.STRING,
+      password: DataTypes.STRING,
+      admin: DataTypes.BOOLEAN,
     },
-    email: {
-      type: DataTypes.STRING,
-      unique: true,
-      validate: {
-        isEmail: true,
-      },
-    },
-    password: DataTypes.STRING,
-    admin: {
-      type: DataTypes.BOOLEAN,
-      default: false,
-    },
-    displayName: DataTypes.STRING,
-    firstName: DataTypes.STRING,
-    lastName: DataTypes.STRING,
-  })
-
+    {}
+  )
   User.associate = models => {
     User.hasMany(models.Macro)
   }

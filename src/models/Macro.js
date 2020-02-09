@@ -1,15 +1,20 @@
-const macro = (sequelize, DataTypes) => {
-  const Macro = sequelize.define('Macro', {
-    name: DataTypes.STRING,
-    icon: DataTypes.STRING,
-    body: DataTypes.JSON,
-  })
-
+module.exports = (sequelize, DataTypes) => {
+  const Macro = sequelize.define(
+    'Macro',
+    {
+      id: {
+        type: DataTypes.UUID,
+        primaryKey: true,
+      },
+      name: DataTypes.STRING,
+      icon: DataTypes.STRING,
+      macro: DataTypes.STRING,
+    },
+    {}
+  )
   Macro.associate = models => {
-    Macro.belongsTo(models.User)
+    Macro.hasMany(models.Macro)
   }
 
   return Macro
 }
-
-export default macro

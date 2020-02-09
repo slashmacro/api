@@ -1,13 +1,9 @@
-import express from 'express'
+const app = require('express')
 
-import macros from './macros'
-import users from './users'
+const router = app.Router()
 
-const Router = express.Router()
+router.get('/', (req, res) => {
+  res.send('Hello World!')
+})
 
-// * ROUTES ARE PREPENDED WITH /api
-
-Router.use('/macros', macros)
-Router.use('/users', users)
-
-export default Router
+module.exports = router

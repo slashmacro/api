@@ -1,32 +1,7 @@
-import express from 'express'
-import passport from 'passport'
+const router = require('express').Router()
 
-import { createUser } from '../../lib/auth'
-
-const router = express.Router()
-
-// * ROUTES ARE PREPENDED WITH /auth
-
-router.get('/session', (req, res) => res.send(req.user))
-
-router.post('/register', (req, res) => {
-  return createUser(req.body)
-    .then(user => res.send(user))
-    .catch(err => res.sendStatus(500).send(err))
+router.get('/', (req, res) => {
+  res.send('Hello World!')
 })
 
-router.post('/login', passport.authenticate('local'), (req, res) => {
-  const { sessionID } = req
-  return res.send(sessionID)
-})
-
-router.delete('/logout', async (req, res) => {
-  try {
-    await req.logOut()
-    return res.sendStatus(200)
-  } catch (err) {
-    return res.sendStatus(500)
-  }
-})
-
-export default router
+module.exports = router

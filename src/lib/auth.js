@@ -1,30 +1,91 @@
-import bcrypt from 'bcrypt'
+const util = require('util')
+const jwt = require('jsonwebtoken')
+const bcrypt = require('bcrypt')
 
-import models from '../models'
+const models = require('../models')
 
-export const isAuthenticated = (req, res, next) => {
-  if (req.isAuthenticated()) return next()
-  return res.sendStatus(401)
+const signJWT = util.promisify(jwt.sign)
+
+const getUser = token => {
+  return new Promise(resolve => {
+    jwt.verify(token, process.env.SESSION_SECRENT, {}, (err, payload) => {
+      if (err) {
+        console.log('Error getting user:', err)
+        return resolve(null)
+      }
+
+      const { userId } = payload
+
+      return models.User.findByPk(userId)
+        .then(user => resolve(user))
+        .catch(() => resolve(null))
+    })
+  })
 }
 
-export const createUser = async opts => {
-  let { username, password, email } = opts
+const authorizeAccess = async token => {
+  const user = await getUser(token)
 
-  // trim strings and force email to be lowercase
+  if (!user) return false
+  return true
+}
+
+const createToken = async (userId, email) => {
+  const token = await signJWT({ userId, email }, process.env.SESSION_SECRENT, {
+    expiresIn: '2w',
+  })
+
+  return token
+}
+
+const authenticateUser = async (email = '', password = '') => {
+  let token = null
+
+  try {
+    email = email.trim().toLowerCase()
+
+    const user = await models.findOne({ where: { email } })
+
+    if (user) {
+      if (await bcrypt.compare(password, user.password)) {
+        token = await createToken(user.id, user.email)
+      }
+    }
+  } catch (err) {
+    console.log('AUTHENTICATE ERROR:', err)
+  }
+
+  return token
+}
+
+const createUser = async opts => {
+  let { name, email, password } = opts
+
   email = (email || '').trim().toLowerCase()
-  username = (username || '').trim()
+  name = (name || '').trim()
   password = (password || '').trim()
 
-  // hash password
+  if (!name || !email || !password) throw new Error('Missing field')
+
   password = await bcrypt.hash(password, 10)
 
-  // create new user
-  const newUser = await models.User.create({ username, password, email })
+  const existingUser = await models.User.findOne({ where: { email } })
 
-  return newUser
+  if (existingUser) {
+    const err = new Error('Email is already in use')
+    err.errors = { email: 'Already in use' }
+    throw err
+  }
+
+  const user = await models.User.create({ name, email, password })
+
+  return user
 }
 
-export const getUserById = async id => {
-  const user = await models.User.findByPk(id)
-  return user
+module.exports = {
+  getUser,
+  authorizeAccess,
+  createToken,
+  authenticateUser,
+  createUser,
 }
