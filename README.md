@@ -14,4 +14,4 @@
    - `DATABASE_PASSWORD`
 4. Run `yarn run dev` to run the server
 
-Pepos
+Pepos :D
