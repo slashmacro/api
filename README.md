@@ -14,15 +14,20 @@
 
 1. clone the repository
 2. install `node_modules`
-3. copy `.env.dist` to `.env`
+3. copy `.env.default` to `.env`
+
 ```bash
 cp .env.dist .env
 ```
+
 4. start the docker container
+
 ```bash
 docker-compose up -d
 ```
+
 5. start the local development server
+
 ```bash
 yarn dev
 ```
